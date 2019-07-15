@@ -7,7 +7,10 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Livros</div>
+                <div class="card-header navbar-nav">
+                    <li class="nav-item"> Livros </li>
+                    <li class="nav-item ml-auto"> <a href=" {{ route('book.create') }}">Adicionar Livro</a> </li>
+                </div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -16,16 +19,30 @@
                         </div>
                     @endif
 
-                    <table>
-                    @forelse ($books as $b)
-                    <tr>
-                        <td> {{ $b->title}} </td>
-                        <td> {{ $b->author}} </td>
-                        <td> {{ $b->user}} </td>
-                    </tr>
-                    @empty
-                        Ainda não há livros cadastrados.
-                    @endforelse
+                    <table class="table">
+                        <tr>
+                            <th>Título</th>
+                            <th>Autor</th>
+                            <th>Dono</th>
+                            <th>Ações</th>
+                        <tr>
+                        @forelse ($books as $b)
+                        <tr>
+                            <td> {{ $b->title}} </td>
+                            <td> {{ $b->author}} </td>
+                            <td> {{ $b->user}} </td>
+                            <td>
+                                <form method="POST" action="{{ route('book.destroy', $b->id) }}">
+                                    @method('DELETE')
+                                    @csrf
+
+                                    <button type="submit" class="btn">Excluir</button>
+                                </form>
+                            </td>
+                        </tr>
+                        @empty
+                            Ainda não há livros cadastrados.
+                        @endforelse
                     </table>
                 </div>
             </div>
