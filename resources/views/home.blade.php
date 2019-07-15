@@ -1,11 +1,13 @@
 @extends('layouts.app')
 
+@section('title') - Biblioteca @endsection
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Dashboard</div>
+                <div class="card-header">Livros</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -14,7 +16,17 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    <table>
+                    @forelse ($books as $b)
+                    <tr>
+                        <td> {{ $b->title}} </td>
+                        <td> {{ $b->author}} </td>
+                        <td> {{ $b->user}} </td>
+                    </tr>
+                    @empty
+                        Ainda não há livros cadastrados.
+                    @endforelse
+                    </table>
                 </div>
             </div>
         </div>
