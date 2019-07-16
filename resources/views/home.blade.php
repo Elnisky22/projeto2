@@ -34,6 +34,12 @@
                             <td> {{ $b->user}} </td>
                             <td> {{ $b->created_at->format('d/m/Y')}} </td>
                             <td>
+                                <form method="PUT" action="{{ route('book.edit', $b->id) }}">
+                                    @csrf
+                                    <button type="submit" class="btn">Editar</button>
+                                </form>
+                            </td>
+                            <td>
                                 <form method="POST" action="{{ route('book.destroy', $b->id) }}">
                                     @method('DELETE')
                                     @csrf
