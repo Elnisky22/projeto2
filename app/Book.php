@@ -12,4 +12,9 @@ class Book extends Model
     public $timestamps = true;
     protected $fillable = ['title', 'author', 'user'];
     protected $guarded = [];
+
+    protected $casts = [
+        'created_at' => 'date',
+        'updated_at' => 'date',
+    ];
 }

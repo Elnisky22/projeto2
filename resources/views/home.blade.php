@@ -24,6 +24,7 @@
                             <th>Título</th>
                             <th>Autor</th>
                             <th>Dono</th>
+                            <th>Data de Cadastro</th>
                             <th>Ações</th>
                         <tr>
                         @forelse ($books as $b)
@@ -31,6 +32,7 @@
                             <td> {{ $b->title}} </td>
                             <td> {{ $b->author}} </td>
                             <td> {{ $b->user}} </td>
+                            <td> {{ $b->created_at->format('d/m/Y')}} </td>
                             <td>
                                 <form method="POST" action="{{ route('book.destroy', $b->id) }}">
                                     @method('DELETE')
