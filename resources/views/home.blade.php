@@ -23,16 +23,13 @@
                         <tr>
                             <th>Título</th>
                             <th>Autor</th>
-                            <th>Dono</th>
-                            <th>Data de Cadastro</th>
                             <th>Ações</th>
                         <tr>
                         @forelse ($books as $b)
                         <tr>
                             <td> {{ $b->title}} </td>
                             <td> {{ $b->author}} </td>
-                            <td> {{ $b->user}} </td>
-                            <td> {{ $b->created_at->format('d/m/Y')}} </td>
+                            <td> <a href="{{ route('book.show', $b->id) }}" class="btn" style="background-color:#f0f0f0;color:black">Detalhes</a>
                             <td>
                                 <form method="PUT" action="{{ route('book.edit', $b->id) }}">
                                     @csrf
