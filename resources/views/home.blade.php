@@ -29,7 +29,15 @@
                         <tr>
                             <td> {{ $b->title}} </td>
                             <td> {{ $b->author}} </td>
-                            <td> <a href="{{ route('book.show', $b->id) }}" class="btn" style="background-color:#f0f0f0;color:black">Detalhes</a>
+                            <td><a href="{{ route('book.show', $b->id) }}" class="btn" style="background-color:#f0f0f0;color:black">Detalhes</a>
+                                @if ($b->is_loaned)
+                                    @if ($b->loaner_id == Auth::user()->id)
+                                        <a href="{{ route('devolution', $b->id) }}" class="btn" style="background-color:#f0f0f0;color:black"> Devolver</a>
+                                    @endif
+                                @else
+                                <a href="{{ route('loan', $b->id) }}" class="btn" style="background-color:#f0f0f0;color:black"> Emprestar</a>
+                                @endif
+                            </td>
                             <td>
                                 <form method="PUT" action="{{ route('book.edit', $b->id) }}">
                                     @csrf

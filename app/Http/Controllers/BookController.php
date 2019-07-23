@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Book;
+use App\User;
 
 class BookController extends Controller
 {
@@ -39,7 +40,8 @@ class BookController extends Controller
         $book = new Book();
         $book->title = $request->input('title');
         $book->author = $request->input('author');
-        $book->user = Auth::user()->name;
+        $book->user_id = Auth::user()->id;
+        $book->is_loaned = false;
         
         $book->save();
         return redirect()->route('home');
@@ -54,7 +56,8 @@ class BookController extends Controller
     public function show($id)
     {
         $book = Book::find($id);
-        return view('detalhes', compact('book'));
+        $dono = User::find($book->user_id);
+        return view('detalhes', compact('book', 'dono'));
     }
 
     /**
@@ -96,5 +99,30 @@ class BookController extends Controller
     {
         Book::destroy($id);
         return redirect()->route('home');
+    }
+
+    public function loan($id)
+    {
+        $book = Book::find($id);
+        $book->loaner_id = Auth::user()->id;
+        $book->loan_date = date('Y-m-d H:i:s');
+        $book->is_loaned = true;
+
+        $book->update();
+        return redirect()->route('home');
+    }
+
+    public function devolution($id)
+    {
+        $book = Book::find($id);
+        $book->is_loaned = false;
+
+        $book->update();
+        return redirect()->route('home');
+    }
+
+    public static function getLoaner($id)
+    {
+        return User::find($id);
     }
 }
